@@ -1,0 +1,106 @@
+.modalCancel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modalCancel-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+  .modalTitle {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .modalSubtitle {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  .modal-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .modal-buttons button {
+    background-color: #4573FF;
+    color: white;
+    border: none;
+    width: 10rem;
+    height: 2.2rem;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .modal-buttons button:hover {
+    background-color: #0033FF;
+    cursor: pointer;
+  }
+  
+  .modal-buttons button:nth-child(2) {
+    background-color: #FE3E3E; 
+  }
+  
+  .modal-buttons button:nth-child(2):hover {
+    background-color: #FF0000;
+    cursor: pointer;
+  }
+
+  .modalItem {
+    text-align: left;
+  }
+
+  .modalCreate-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+
+  .cancelBtn {
+    background-color: #FE3E3E;
+    color: white;
+    border: none;
+    width: 10rem;
+    height: 2.2rem;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  .cancelBtn:hover {
+    background-color: #FF0000;
+    cursor: pointer;
+  }
+
+  .confirmBtn {
+    background-color: #68C34A;
+    color: white;
+    border: none;
+    width: 10rem;
+    height: 2.2rem;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  .confirmBtn:hover {
+    background-color: #4A9A2A;
+    cursor: pointer;
+  }
+
+  

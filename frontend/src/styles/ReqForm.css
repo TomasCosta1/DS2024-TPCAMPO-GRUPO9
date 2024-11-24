@@ -14,6 +14,12 @@
     justify-content: space-evenly;
 }
 
+.rowBtn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
 .inputSection {
     display: flex;
     flex-direction: column;
@@ -75,8 +81,6 @@
     margin-top: 20px;
     padding: 10px;
     border-radius: 5px;
-    display: flex;
-    justify-content: center;
 }
 
 th, td {
@@ -114,3 +118,35 @@ th, td {
     background-color: #4CAF50;
     cursor: pointer;
 }
+
+.alert {
+    color: red;
+    font-size: 20px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .row {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .inputSection{
+        width: 90%;
+    }
+
+    .table-container {
+        width: 85%;
+    }
+
+    th, td {
+      padding: 8px;
+      font-size: 11px;
+    }
+  
+    th {
+      white-space: nowrap; 
+    }
+  }

@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "../styles/ReqForm.css";
 import axios from "axios";
+import Form from "./Form";
+import ModalCancel from "./ModalCancel";
+import ModalCreate from "./ModalCreate";
+import { useNavigate } from "react-router-dom";
 
 const ReqForm = () => {
   const [type, setType] = useState("");
+  const [typeDescription, setTypeDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [categoryDescription, setCategoryDescription] = useState("");
   const [priority, setPriority] = useState("");
+  const [priorityDescription, setPriorityDescription] = useState("");
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
   const [files, setFiles] = useState([]);
@@ -15,8 +22,14 @@ const ReqForm = () => {
   const [selectPriority, setSelectPriority] = useState([]);
   const [filteredCategories, setFilteredCategories] = useState([]);
   const [selectedRequirements, setSelectedRequirements] = useState([]);
+  const [selectedRequirementsDesc, setSelectedRequirementsDesc] = useState([]);
+  const [modalCancel, setModalCancel] = useState(false);
+  const [modalCreate, setModalCreate] = useState(false);
+  const [validate, setValidate] = useState(false);
 
-  // Función para obtener los requerimientos desde el backend
+  const formRef = React.useRef(null);
+  const navigate = useNavigate();
+
   const fetchRequirements = async () => {
     try {
       const response = await axios.get("http://localhost:3000/requirements");
@@ -30,19 +43,30 @@ const ReqForm = () => {
     fetchRequirements();
   }, []);
 
-  // Función para manejar la selección de requerimientos relacionados
   const handleCheckboxChange = (id) => {
-    setSelectedRequirements(
-      (prevSelected) =>
-        prevSelected.includes(id)
-          ? prevSelected.filter((reqId) => reqId !== id) // Desmarcar
-          : [...prevSelected, id] // Marcar
+    setSelectedRequirements((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((reqId) => reqId !== id)
+        : [...prevSelected, id]
     );
+    console.log(selectedRequirements);
+    
+  };
+
+  const handleCheckboxNames = (name) => {
+    
+    setSelectedRequirementsDesc((prevSelected) =>
+      prevSelected.includes(name)
+        ? prevSelected.filter((reqName) => reqName !== name)
+        : [...prevSelected, name]
+    );
+    console.log(selectedRequirementsDesc);
+    
   };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toISOString().split("T")[0]; // Devuelve solo la fecha en formato YYYY-MM-DD
+    return date.toISOString().split("T")[0];
   };
 
   const submitReq = async (e) => {
@@ -81,10 +105,29 @@ const ReqForm = () => {
       );
 
       console.log("Respuesta del servidor:", response.data);
+      navigate("/");
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
     }
   };
+
+  const handleFormSubmit = () => {
+    if (formRef.current) {
+      formRef.current.dispatchEvent(
+        new Event("submit", { bubbles: true, cancelable: true })
+      );
+    }
+    setModalCreate(false);
+  };
+
+  const validateData = () => {
+    if (!type || !category || !priority || !subject || !description) {
+      setValidate(true);
+    } else {
+      setValidate(false);
+      setModalCreate(true);
+    }
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -137,194 +180,62 @@ const ReqForm = () => {
     }
   }, [type, selectType, selectCategory]);
 
+  useEffect(() => {
+    if (modalCancel) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [modalCancel]);
+
   return (
     <div>
+      {modalCancel && <ModalCancel setModalCancel={setModalCancel} />}
+      {modalCreate && (
+        <ModalCreate
+          validateData={validateData}
+          handleFormSubmit={handleFormSubmit}
+          typeDescription={typeDescription}
+          categoryDescription={categoryDescription}
+          priorityDescription={priorityDescription}
+          subject={subject}
+          description={description}
+          files={files}
+          selectedRequirementsDesc={selectedRequirementsDesc}
+          setModalCreate={setModalCreate}
+        />
+      )}
       <div>
         <h3 className="title">Nuevo Requerimiento</h3>
-        <form className="form" onSubmit={submitReq}>
-          <div className="row">
-            <section className="inputSection">
-              <label htmlFor="type" className="labels">
-                Tipo Requerimiento
-              </label>
-              <select
-                id="type"
-                name="type"
-                className="inputs"
-                onChange={(e) => setType(e.target.value)}
-                value={type}
-                required
-              >
-                <option value="">Seleccione un tipo</option>
-                {selectType.map((element) => (
-                  <option key={element.key} value={element.value}>
-                    {element.value}
-                  </option>
-                ))}
-              </select>
-            </section>
-            <section className="inputSection">
-              <label htmlFor="category" className="labels">
-                Categoria
-              </label>
-              <select
-                id="category"
-                name="category"
-                className="inputs"
-                onChange={(e) => setCategory(e.target.value)}
-                required
-              >
-                <option value="">Seleccione una categoría</option>
-                {filteredCategories.map((element) => (
-                  <option key={element.id} value={element.id}>
-                    {element.value}
-                  </option>
-                ))}
-              </select>
-            </section>
-          </div>
-
-          <div className="row">
-            <section className="inputSection">
-              <label htmlFor="priority" className="labels">
-                Prioridad
-              </label>
-              <select
-                id="priority"
-                name="priority"
-                className="inputs"
-                onChange={(e) => setPriority(e.target.value)}
-                required
-              >
-                <option value="">Seleccione una prioridad</option>
-                {selectPriority.map((element) => (
-                  <option key={element.key} value={element.key}>
-                    {element.value}
-                  </option>
-                ))}
-              </select>
-            </section>
-            <section className="inputSection">
-              <label htmlFor="subject" className="labels">
-                Asunto
-              </label>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                className="inputs"
-                onChange={(e) => setSubject(e.target.value)}
-                required
-              />
-            </section>
-          </div>
-
-          <div className="row">
-            <section className="inputSection">
-              <label htmlFor="description" className="labels">
-                Descripción
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                className="inputs"
-                onChange={(e) => setDescription(e.target.value)}
-                required
-              />
-            </section>
-            <section className="inputSection">
-              <label htmlFor="files" className="labels">
-                Archivos
-              </label>
-              <input
-                type="file"
-                id="files"
-                name="files"
-                accept=".pdf,.docx,.xlsx"
-                className="inputFile"
-                onChange={(e) => {
-                  const maxFiles = 5;
-                  if (e.target.files.length > maxFiles) {
-                    alert(
-                      `Solo puedes subir un máximo de ${maxFiles} archivos.`
-                    );
-                    e.target.value = "";
-                    return;
-                  }
-                  const fileDetails = Array.from(e.target.files).map(
-                    (file) => ({
-                      name: file.name,
-                      size: file.size,
-                    })
-                  );
-                  setFiles(fileDetails);
-                }}
-                multiple
-              />
-              <section className="inputFileBtn">
-              <button
-                className="file-button"
-                onClick={() => document.getElementById("files").click()}
-              >Seleccionar archivos</button>
-              {files.length > 0 && (<span className="cant">{files.length} archivo/s seleccionado/s</span>)}
-              </section>
-              
-            </section>
-          </div>
-          <div className="row">
-            <div className="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Check</th>
-                    <th>Nombre</th>
-                    <th>Prioridad</th>
-                    <th>Tipo</th>
-                    <th>Categoría</th>
-                    <th>Fecha de Creación</th>
-                    <th>Estatus</th>
-                    <th>Asunto</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {requirements.map((req, index) => {
-                    const formattedDate = formatDate(req.created_at);
-                    return (
-                      <tr key={req.id}>
-                        <td>
-                          <input
-                            type="checkbox"
-                            checked={selectedRequirements.includes(req.id)}
-                            onChange={() => handleCheckboxChange(req.id)}
-                          />
-                        </td>
-                        <td>{req.name}</td>
-                        <td>{req.priority}</td>
-                        <td>{req.type}</td>
-                        <td>{req.category}</td>
-                        <td>{formattedDate}</td>
-                        <td>{req.status}</td>
-                        <td>{req.subject}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div className="row">
-            <section className="inputSection">
-              <button className="cancelButton">Cancelar</button>
-            </section>
-            <section className="inputSection">
-              <button type="submit" className="createButton">
-                Crear
-              </button>
-            </section>
-          </div>
-        </form>
+        <Form
+          submitReq={submitReq}
+          type={type}
+          setType={setType}
+          setTypeDescription={setTypeDescription}
+          selectType={selectType}
+          setCategory={setCategory}
+          setCategoryDescription={setCategoryDescription}
+          filteredCategories={filteredCategories}
+          setPriority={setPriority}
+          setPriorityDescription={setPriorityDescription}
+          selectPriority={selectPriority}
+          setFiles={setFiles}
+          files={files}
+          setSubject={setSubject}
+          setDescription={setDescription}
+          setModalCancel={setModalCancel}
+          setModalCreate={setModalCreate}
+          requirements={requirements}
+          formatDate={formatDate}
+          selectedRequirements={selectedRequirements}
+          handleCheckboxChange={handleCheckboxChange}
+          handleCheckboxNames={handleCheckboxNames}
+          validateData={validateData}
+          validate={validate}
+          formRef={formRef}
+        />
       </div>
+      
     </div>
   );
 };
