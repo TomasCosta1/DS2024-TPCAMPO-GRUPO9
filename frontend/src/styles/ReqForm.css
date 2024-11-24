@@ -1,0 +1,152 @@
+.title {
+    text-align: center;
+}
+
+.form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.rowBtn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.inputSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    width: 30%;
+}
+
+.inputs {
+    width: 100%;
+    height: 35px;
+    border: 2px solid #000000;
+}
+
+.inputFile {
+    width: 100%;
+    height: 35px;
+    display: none;
+}
+
+.inputFileBtn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.file-button {
+    background-color: #4573FF;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    display: inline-block;
+    text-align: center;
+    border: none;
+  }
+  
+  .file-button:hover {
+    background-color: #0033FF;
+  }
+
+  .cant {
+    margin-left: 5px;
+  }
+
+.labels {
+    align-self: start;
+    margin-bottom: 8px;
+}
+
+.table-container {
+    width: 73%;
+    height: 250px;
+    overflow-y: scroll; 
+    border: 2px solid #000000;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.cancelButton {
+    background-color: #FE3E3E;
+    color: white;
+    border: none;
+    width: 10rem;
+    height: 2.2rem;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.cancelButton:hover {
+    background-color: #FF0000;
+    cursor: pointer;
+}
+
+.createButton {
+    background-color: #68C34A;
+    color: white;
+    border: none;
+    width: 10rem;
+    height: 2.2rem;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.createButton:hover {
+    background-color: #4CAF50;
+    cursor: pointer;
+}
+
+.alert {
+    color: red;
+    font-size: 20px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .row {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .inputSection{
+        width: 90%;
+    }
+
+    .table-container {
+        width: 85%;
+    }
+
+    th, td {
+      padding: 8px;
+      font-size: 11px;
+    }
+  
+    th {
+      white-space: nowrap; 
+    }
+  }
