@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useState, useContext} from "react";
 import "../styles/ModalCancel.css";
+import { UserContext } from "../context/UserContext";
 
 const ModalCreate = ({
   setModalCreate,
@@ -12,6 +13,20 @@ const ModalCreate = ({
   files,
   selectedRequirementsDesc,
 }) => {
+  const [fullName, setFullName] = useState("");
+    
+    const {userId} = useContext(UserContext);
+
+    const fetchFullName = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/user/${userId}`);
+            const data = await response.json();
+            setFullName(data[0].name + ' ' + data[0].lastname);
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    };
+    fetchFullName();
   return (
     <div className="modalCancel">
       <div className="modalCancel-content">
@@ -23,22 +38,30 @@ const ModalCreate = ({
         <p className="modalItem"><strong>Categoría:</strong> {categoryDescription}</p>
         <p className="modalItem"><strong>Estado:</strong> Abierto</p>
         <p className="modalItem"><strong>Prioridad:</strong> {priorityDescription}</p>
-        <p className="modalItem"><strong>Usuario Emisor:</strong> PONER USUARIO CON EL CONTEXT</p>
+        <p className="modalItem"><strong>Usuario Emisor:</strong> {fullName}</p>
         <p className="modalItem"><strong>Asunto:</strong> {subject}</p>
         <p className="modalItem"><strong>Descripción:</strong> {description}</p>
         <p className="modalItem">
           <strong>Archivos:</strong>{" "}
-          {files.map((file) => {
+          {files.length > 0 ? (files.map((file) => {
             return file.name + ", ";
-          })}
+          })
+        ) : (
+          "Este requerimiento no tiene ningún archivo."
+        )
+      }
         </p>
         <p className="modalItem">
           <strong>Requerimientos relacionados:</strong>{" "}
-          {selectedRequirementsDesc.map((req) => {
+          {selectedRequirementsDesc.length > 0 ? (selectedRequirementsDesc.map((req) => {
             return req + ", ";
-          })}
+          })
+        ) : (
+          "No hay requerimientos relacionados."
+        )
+      }
         </p>
-        <p className="modalItem"><strong>Usuario Propietario:</strong> PONER USUARIO CON EL CONTEXT</p>
+        <p className="modalItem"><strong>Usuario Propietario:</strong> {fullName}</p>
         <div className="modalCreate-buttons">
           <button className="cancelBtn" onClick={() => setModalCreate(false)}>
             Cancelar
