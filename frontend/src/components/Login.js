@@ -33,10 +33,9 @@ const Login = ({ handleUser, handleEmail, handlePass }) => {
             const data = await response.json();
 
             if (data.success) {
-                handleUser(data.name);
                 handleEmail(loginData.email);
                 handlePass(loginData.pass);
-                navigate("/");
+                navigate("/profile");
             } else {
                 toast.error('Credenciales inválidas.', { theme: "colored" });
             }

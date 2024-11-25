@@ -42,42 +42,61 @@
     margin-bottom: 5px;
 }
 
-.profile-field input {
+.inputProfile {
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 2px solid #000000;
     border-radius: 5px;
-    background-color: #f5f5f5;
+    background-color: #ececec;
+}
+.inputProfileActive {
+  padding: 8px;
+    border: 2px solid #000000;
+    border-radius: 5px;
 }
 
 .profile-actions {
     margin-top: 20px;
     display: flex;
-    gap: 10px;
+    justify-content: space-evenly;
+    width: 53%;
 }
 
 .cancel-button,
 .edit-button,
 .confirm-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
+  color: white;
+  border: none;
+  width: 10rem;
+  height: 2.2rem;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
 .cancel-button {
-    background-color: #f44336;
-    color: #fff;
+    background-color: #FE3E3E;
+}
+
+.cancel-button:hover {
+  background-color: #FF0000;
+  cursor: pointer;
 }
 
 .edit-button {
-    background-color: #2196f3;
-    color: #fff;
+    background-color: #4573FF;
+}
+
+.edit-button:hover {
+  background-color: #0033FF;
+  cursor: pointer;
 }
 
 .confirm-button {
-    background-color: #4caf50;
-    color: #fff;
+    background-color: #68C34A;
+}
+
+.confirm-button:hover {
+  background-color: #4CAF50;
+  cursor: pointer;
 }
 
 

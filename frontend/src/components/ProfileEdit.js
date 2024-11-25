@@ -1,16 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import "../styles/Profile.css";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
-const Profile = ({email, pass}) => {
-    const { verify } = useContext(UserContext);
-    verify();
-
-    const navigate = useNavigate();
-
+const Profile = ({email, pass, handleEmail, handlePass}) => {
+  const { verify } = useContext(UserContext);
+  verify();
     const [userData, setUserData] = useState({});
-    const [isEditing, setIsEditing] = useState(false);
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -33,27 +30,28 @@ const Profile = ({email, pass}) => {
         setUserData({ ...userData, [name]: value });
     };
 
-    const toggleEditMode = () => {
-        navigate("/profileEdit")
-    };
-
     const handleSubmit = async () => {
-        /*try {
-            const response = await fetch(`http://localhost:3000/profile/${userId}`, {
+        try {
+            const response = await fetch(`http://localhost:3000/login`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(userData),
             });
 
-            if (response.ok) {
-                alert("Perfil actualizado correctamente");
-                setIsEditing(false);
-            } else {
-                alert("Error al actualizar el perfil");
+            const data = await response.json()
+            console.log(data);
+            
+
+            if (data.success) {
+                handleEmail(userData.email)
+                handlePass(userData.password)
+                navigate("/profile")
             }
+
+            
         } catch (error) {
             console.error("Error al enviar los datos del perfil:", error);
-        }*/
+        }
     };
 
 
@@ -90,8 +88,8 @@ const Profile = ({email, pass}) => {
                             type="email"
                             name="email"
                             value={userData.email}
-                            disabled="true"
-                            className="inputProfile"
+                            onChange={handleInputChange}
+                            className="inputProfileActive"
                         />
                     </div>
                     <div className="profile-field">
@@ -115,20 +113,19 @@ const Profile = ({email, pass}) => {
                     <div className="profile-field">
                         <label>Usuario</label>
                         <input
-                            name="usuario"
+                            name="username"
                             value={userData.username}
-                            disabled="true"
-                            className="inputProfile"
+                            onChange={handleInputChange}
+                            className="inputProfileActive"
                         />
                     </div>
                     <div className="profile-field">
                         <label>Password</label>
                         <input
-                            type="password"
                             name="password"
                             value={userData.password}
-                            disabled="true"
-                            className="inputProfile"
+                            onChange={handleInputChange}
+                            className="inputProfileActive"
                         />
                     </div>
                     <div className="profile-field">
@@ -144,13 +141,13 @@ const Profile = ({email, pass}) => {
             <div className="profile-actions">
                         <button
                             className="cancel-button"
-                            onClick={() => navigate("/")}
+                            onClick={() => navigate("/profile")}
                         >
-                            Volver
+                            Cancelar
                         </button>
-                        <button className="edit-button" onClick={toggleEditMode}>
-                        Editar
-                    </button>
+                        <button className="confirm-button" onClick={handleSubmit}>
+                            Confirmar
+                        </button>
             </div>
         </div>
     );

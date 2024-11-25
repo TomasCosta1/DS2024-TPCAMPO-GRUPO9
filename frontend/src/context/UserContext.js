@@ -5,6 +5,7 @@ export const UserContext=createContext()
 
 export const UserProvider=({children}) => {
     const [user, setUser] = useState("");
+    const [userId, setUserId] = useState("");
     const [pass, setPass] = useState("");
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
@@ -21,6 +22,10 @@ export const UserProvider=({children}) => {
         setEmail(prop);
     }
 
+    const handleUserId = (prop) => {
+        setUserId(prop);
+    }
+
     const verify = async () => {
             const loginData = {
                 email: email,
@@ -35,6 +40,7 @@ export const UserProvider=({children}) => {
                 const data = await response.json();
         
                 if (data.success) {
+                    
                 } else {
                     navigate("/login")
                 }
@@ -48,10 +54,12 @@ export const UserProvider=({children}) => {
           value={{
             user,
             pass,
+            userId,
             email,
             handleUser,
             handlePass,
             handleEmail,
+            handleUserId,
             verify
           }}
         >

@@ -2,6 +2,12 @@ const express = require('express');
 const pool = require('../config/database');
 const router = express.Router();
 
+router.get("/", async (req, res) => {
+    const query = "SELECT * FROM User";
+    const result = await pool.query(query);
+    res.status(200).json({success: true, message: result})
+})
+
 router.get("/:email/:pass", async (req, res) => {
     const email = req.params.email;
     const password = req.params.pass;
@@ -17,18 +23,11 @@ router.get("/:email/:pass", async (req, res) => {
     
             const userPassword = user[0].password;
 
-            console.log("Contraseña enviada:", password);
-            console.log("Contraseña almacenada:", userPassword);
-            console.log("Tipo enviada:", typeof password);
-            console.log("Tipo almacenada:", typeof userPassword);
-            console.log("Longitud enviada:", password.length);
-            console.log("Longitud almacenada:", userPassword.length);
-
             if (userPassword.trim() === password.trim()) {
                 // Si coinciden, login exitoso
 
 
-                return res.status(200).json({ success: true, message: "Inicio de sesión exitoso", name:user[0].name });
+                return res.status(200).json({ success: true, message: "Inicio de sesión exitoso", user:user[0] });
             } else {
                 // Si no coinciden, devuelve error
                 return res.status(401).json({ success: false, message: "Credenciales inválidas" });
@@ -39,6 +38,19 @@ router.get("/:email/:pass", async (req, res) => {
         }
     
 });
+
+router.put("/", async (req, res) => {
+    const userData = req.body;
+    const query = "UPDATE User SET username = ?, password = ?, email = ? WHERE id = ?"
+    try {
+        const response = await pool.query(query, [userData.username, userData.password, userData.email, userData.id]);
+        res.status(200).json({success: true, message: "Datos Actualizados"})
+    } catch (error) {
+        console.log('Error:', error);
+        res.status(400).json({message: 'Error', error: error.message});
+    }
+    
+})
 
 router.get("/test", (req, res) => {
     res.send("Ruta de prueba funcionando");

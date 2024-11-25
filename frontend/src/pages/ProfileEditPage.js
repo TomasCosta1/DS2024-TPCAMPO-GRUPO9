@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
-import Profile from "../components/Profile";
+import ProfileEdit from "../components/ProfileEdit"
 import "../styles/Login.css";
 import { UserContext } from "../context/UserContext";
 
-const ProfilePage = () => {
+const ProfileEditPage = () => {
   const { handleUser, handleEmail, handlePass, email, pass } = useContext(UserContext);
   return (
     <div>
-      <Profile email={email} pass={pass} />
+      <ProfileEdit email={email} pass={pass} handleEmail={handleEmail} handlePass={handlePass} />
     </div>
   );
 }
 
-export default ProfilePage;
+export default ProfileEditPage;

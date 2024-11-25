@@ -1,10 +1,11 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ReqForm from './pages/NewReq';
-import Home from './pages/HomePage';
-import Login from './pages/LoginPage';
-import Profile from './pages/ProfilePage';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import ProfilePage from './pages/ProfilePage';
+import ProfileEditPage from './pages/ProfileEditPage';
 import { UserProvider } from './context/UserContext';
+import NewReq from './pages/NewReq';
 
 function App() {
   return (
@@ -12,10 +13,11 @@ function App() {
       <UserProvider>
       <div>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/newReq" element={<ReqForm />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/newReq" element={<NewReq />} />
+          <Route path='/profileEdit' element={<ProfileEditPage />} />
         </Routes>
       </div>
       </UserProvider>
