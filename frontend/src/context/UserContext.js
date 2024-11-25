@@ -36,10 +36,8 @@ export const UserProvider=({children}) => {
                 const response = await fetch(`http://localhost:3000/login/${loginData.email}/${loginData.pass}`, {
                     method: 'GET'
                 });
-                console.log(loginData);
                 
                 const data = await response.json();
-                console.log(data);
                 
         
                 if (data.success) {
@@ -53,6 +51,13 @@ export const UserProvider=({children}) => {
             }
     }
 
+    const clearUser = () => {
+        setEmail('');
+        setPass('');
+        setUserId('');
+        navigate('/login');
+    }
+
     return (
         <UserContext.Provider
           value={{
@@ -64,7 +69,8 @@ export const UserProvider=({children}) => {
             handlePass,
             handleEmail,
             handleUserId,
-            verify
+            verify,
+            clearUser
           }}
         >
             {children}

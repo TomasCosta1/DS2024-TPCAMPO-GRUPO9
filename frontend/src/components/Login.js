@@ -35,7 +35,7 @@ const Login = ({ handleUser, handleEmail, handlePass }) => {
             if (data.success) {
                 handleEmail(loginData.email);
                 handlePass(loginData.pass);
-                navigate("/profile");
+                navigate("/");
             } else {
                 toast.error('Credenciales inválidas.', { theme: "colored" });
             }

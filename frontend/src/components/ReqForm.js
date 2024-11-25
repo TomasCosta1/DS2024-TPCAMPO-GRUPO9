@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "../styles/ReqForm.css";
 import axios from "axios";
 import Form from "./Form";
 import ModalCancel from "./ModalCancel";
 import ModalCreate from "./ModalCreate";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 const ReqForm = () => {
   const [type, setType] = useState("");
@@ -29,6 +30,7 @@ const ReqForm = () => {
 
   const formRef = React.useRef(null);
   const navigate = useNavigate();
+  const { userId } = useContext(UserContext);
 
   const fetchRequirements = async () => {
     try {
@@ -90,7 +92,7 @@ const ReqForm = () => {
       files: fileDetails,
       relatedReq: relatedReqDetails,
       status_id: 1,
-      user_id: 1,
+      user_id: userId,
     };
 
     try {
