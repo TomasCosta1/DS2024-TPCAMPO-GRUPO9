@@ -3,14 +3,16 @@ import { UserContext } from "../context/UserContext";
 import "../styles/Profile.css";
 import { useNavigate } from 'react-router-dom';
 
-const Profile = ({email, pass}) => {
-    const { verify } = useContext(UserContext);
-    verify();
+const Profile = ({email, pass, verify}) => {
 
     const navigate = useNavigate();
 
     const [userData, setUserData] = useState({});
     const [isEditing, setIsEditing] = useState(false);
+
+    useEffect(() => {
+        verify();
+    }, [])
 
     useEffect(() => {
         const fetchUserData = async () => {

@@ -4,7 +4,8 @@ import "../styles/Login.css";
 import { UserContext } from "../context/UserContext";
 
 const ProfileEditPage = () => {
-  const { handleUser, handleEmail, handlePass, email, pass } = useContext(UserContext);
+  const { handleEmail, handlePass, email, pass, verify } = useContext(UserContext);
+  verify();
   return (
     <div>
       <ProfileEdit email={email} pass={pass} handleEmail={handleEmail} handlePass={handlePass} />

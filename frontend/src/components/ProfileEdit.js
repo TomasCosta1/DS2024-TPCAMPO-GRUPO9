@@ -4,8 +4,6 @@ import "../styles/Profile.css";
 import { useNavigate } from "react-router-dom";
 
 const Profile = ({email, pass, handleEmail, handlePass}) => {
-  const { verify } = useContext(UserContext);
-  verify();
     const [userData, setUserData] = useState({});
     const navigate = useNavigate()
 
