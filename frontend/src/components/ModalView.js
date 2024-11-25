@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/ModalCancel.css";
 import axios from "axios";
 import AttachmentBlock from "./AttachmentBlock";
+import CommentBlock from "./CommentBlock";
 
 const ModalView = ({ requirementId, setModal }) => {
     const [requirement, setRequirement] = useState({
@@ -15,9 +16,9 @@ const ModalView = ({ requirementId, setModal }) => {
         owner: '',
         created_at: '',
         creator: '',
-        relatedReq: [],
-        files: [],
     });
+
+    const [loading, setLoading] = useState(true);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -26,6 +27,7 @@ const ModalView = ({ requirementId, setModal }) => {
 
     const fetchDataById = async (id) => {
         try {
+            setLoading(true);
             const response = await axios.get("http://localhost:3000/requirement/" + id);
             setRequirement({
                 name: response.data[0].name,
@@ -39,6 +41,8 @@ const ModalView = ({ requirementId, setModal }) => {
             });
         } catch (error) {
             console.error("Error buscando el requerimiento:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -76,7 +80,7 @@ const ModalView = ({ requirementId, setModal }) => {
     }, [requirementId]);
     // console.log(requirement)
 
-    if (!requirement) {
+    if (loading) {
         return (
             <div className="modalCancel">
                 <div className="modalCancel-content">
@@ -103,6 +107,7 @@ const ModalView = ({ requirementId, setModal }) => {
                 <AttachmentBlock id={requirementId} />
                 <p className="modalItem"><strong>Usuario Propietario:</strong> PONER USUARIO CON EL CONTEXT</p>
                 <p className="modalItem"><strong>Comentarios:</strong></p>
+                <CommentBlock id={requirementId} />
             </div>
         </div>
     );
