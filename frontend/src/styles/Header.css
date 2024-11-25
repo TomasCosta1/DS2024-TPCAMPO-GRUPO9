@@ -1,0 +1,29 @@
+header{
+    background-color: #8C81FF;
+    display: flex;
+    align-items: center;
+    padding: 20px 40px;
+    justify-content: space-between;
+}
+
+header div{
+    display: flex;
+    align-items: center;
+}
+
+header .btnLogout{
+    background-color: red;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+header img{
+    width: 100px;
+    margin-right: 10px;
+}
+
+header i{
+    color: white;
+    font-size: 2.5rem;
+}

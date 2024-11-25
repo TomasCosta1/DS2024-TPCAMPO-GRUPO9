@@ -19,6 +19,7 @@
     max-width: 500px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
+    position: relative;
   }
   
   .modalTitle {
@@ -103,4 +104,12 @@
     cursor: pointer;
   }
 
-  
+  .crossCloseButton{
+    background: none;
+    border: none;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 2.5rem;
+    cursor: pointer;
+  }

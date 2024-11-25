@@ -14,4 +14,17 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/:code', async (req, res) => {
+    const { code } = req.params;
+    const query = 'SELECT * FROM RequirementType WHERE code = ?';
+
+    try{
+        const [results] = await pool.query(query, [code]);
+        res.status(200).json(results);
+    } catch(error){
+        console.log('Error al buscar el tipo', error);
+        res.status(400).json({message: 'Error al buscar el tipo', error: error.message});
+    }
+})
+
 module.exports = router;
