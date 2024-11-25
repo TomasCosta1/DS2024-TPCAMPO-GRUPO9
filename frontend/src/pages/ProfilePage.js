@@ -4,10 +4,11 @@ import "../styles/Login.css";
 import { UserContext } from "../context/UserContext";
 
 const ProfilePage = () => {
-  const { handleUser, handleEmail, handlePass, email, pass } = useContext(UserContext);
+  const { email, pass, verify } = useContext(UserContext);
+  verify();
   return (
     <div>
-      <Profile email={email} pass={pass} />
+      <Profile email={email} pass={pass} verify={verify} />
     </div>
   );
 }

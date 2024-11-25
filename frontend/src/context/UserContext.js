@@ -36,11 +36,14 @@ export const UserProvider=({children}) => {
                 const response = await fetch(`http://localhost:3000/login/${loginData.email}/${loginData.pass}`, {
                     method: 'GET'
                 });
-        
+                console.log(loginData);
+                
                 const data = await response.json();
+                console.log(data);
+                
         
                 if (data.success) {
-                    
+                    handleUserId(data.user.id)
                 } else {
                     navigate("/login")
                 }

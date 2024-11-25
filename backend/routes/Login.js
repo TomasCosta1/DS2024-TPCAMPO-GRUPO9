@@ -22,6 +22,7 @@ router.get("/:email/:pass", async (req, res) => {
             }
     
             const userPassword = user[0].password;
+            
 
             if (userPassword.trim() === password.trim()) {
                 // Si coinciden, login exitoso
