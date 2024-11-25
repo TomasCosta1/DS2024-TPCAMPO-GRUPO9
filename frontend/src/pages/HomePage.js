@@ -20,8 +20,21 @@ const HomePage = () => {
     const [searchType, setSearchType] = useState('');
     const [modal, setModal] = useState(false);
     const [selectedRequirementId, setSelectedRequirementId] = useState(null);
-
+    const [fullName, setFullName] = useState("");
+    
+    const {userId} = useContext(UserContext);
     const navigate = useNavigate();
+
+    const fetchFullName = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/user/${userId}`);
+            const data = await response.json();
+            setFullName(data[0].name + ' ' + data[0].lastname);
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    };
+    fetchFullName();
 
     useEffect(() => {
         fetchRequirements();
@@ -29,7 +42,7 @@ const HomePage = () => {
 
     const fetchRequirements = async () => {
         try {
-            const response = await axios.get("http://localhost:3000/requirements");
+            const response = await axios.get(`http://localhost:3000/requirements/${userId}`);
             setRequirements(response.data);
         } catch (error) {
             console.error("Error buscando los requerimientos:", error);
@@ -75,6 +88,7 @@ const HomePage = () => {
                 <ModalView
                     requirementId={selectedRequirementId}
                     setModal={setModal}
+                    fullName={fullName}
                 />
             )}
             <Header />

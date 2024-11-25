@@ -4,7 +4,7 @@ import axios from "axios";
 import AttachmentBlock from "./AttachmentBlock";
 import CommentBlock from "./CommentBlock";
 
-const ModalView = ({ requirementId, setModal }) => {
+const ModalView = ({ requirementId, setModal, fullName }) => {
     const [requirement, setRequirement] = useState({
         name: '',
         type: '',
@@ -99,13 +99,13 @@ const ModalView = ({ requirementId, setModal }) => {
                 <p className="modalItem"><strong>Categoría:</strong> {requirement.category}</p>
                 <p className="modalItem"><strong>Estado:</strong> {requirement.status}</p>
                 <p className="modalItem"><strong>Prioridad:</strong> {requirement.priority}</p>
-                <p className="modalItem"><strong>Usuario Emisor:</strong> PONER USUARIO CON EL CONTEXT</p>
+                <p className="modalItem"><strong>Usuario Emisor:</strong> {fullName}</p>
                 <p className="modalItem"><strong>Fecha de Creación:</strong> {requirement.created_at}</p>
                 <p className="modalItem"><strong>Asunto:</strong> {requirement.subject}</p>
                 <p className="modalItem"><strong>Descripción:</strong> {requirement.description}</p>
                 <p className="modalItem"><strong>Archivos:</strong></p>
                 <AttachmentBlock id={requirementId} />
-                <p className="modalItem"><strong>Usuario Propietario:</strong> PONER USUARIO CON EL CONTEXT</p>
+                <p className="modalItem"><strong>Usuario Propietario:</strong> {fullName}</p>
                 <p className="modalItem"><strong>Comentarios:</strong></p>
                 <CommentBlock id={requirementId} />
             </div>

@@ -63,14 +63,12 @@ router.post('/', async (req, res) => {
         
         // Generar el nombre del requerimiento
         const requirementName = `REH-${currentYear}-${String(nextNumber).padStart(10, '0')}`;
-        console.log('Nombre del requerimiento:', requirementName);
         
         // Insertar el requerimiento en la tabla Requirement
         const query = 'INSERT INTO Requirement (name, subject, description, status_id, priority_id, category_id, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)';
         const [result] = await pool.query(query, [requirementName, subject, description, status_id, priority_id, category_id, user_id]);
         
         const requirementId = result.insertId;
-        console.log('Requerimiento creado con ID:', requirementId);
 
         // Insertar archivos si hay
         if (files && files.length > 0) {
