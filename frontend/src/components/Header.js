@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import '../styles/Header.css';
 import { UserContext } from '../context/UserContext';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
     const { userId, clearUser } = useContext(UserContext);
@@ -23,7 +24,8 @@ const Header = () => {
         <header>
             <div>
                 <img src={imgProfile} alt="User icon" className='imgProfile'/>
-                <h2>{fullName}</h2>
+                <Link to='/profile'> <h2>{fullName}</h2> </Link>
+                
             </div>
             <div className='btnLogout' onClick={clearUser}>
                 <i className="fa-solid fa-arrow-right-from-bracket"></i>

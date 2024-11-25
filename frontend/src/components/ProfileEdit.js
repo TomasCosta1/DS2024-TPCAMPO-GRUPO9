@@ -37,7 +37,6 @@ const Profile = ({email, pass, handleEmail, handlePass}) => {
             });
 
             const data = await response.json()
-            console.log(data);
             
 
             if (data.success) {

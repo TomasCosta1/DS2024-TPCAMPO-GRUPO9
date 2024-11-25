@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../styles/ModalCancel.css";
 import axios from "axios";
 import AttachmentBlock from "./AttachmentBlock";
 import CommentBlock from "./CommentBlock";
+import { UserContext } from "../context/UserContext";
 
 const ModalView = ({ requirementId, setModal }) => {
     const [requirement, setRequirement] = useState({
@@ -13,10 +14,11 @@ const ModalView = ({ requirementId, setModal }) => {
         priority: '',
         subject: '',
         description: '',
-        owner: '',
         created_at: '',
-        creator: '',
     });
+
+    const { userId } = useContext(UserContext);
+    const [user, setUser] = useState('');
 
     const [loading, setLoading] = useState(true);
 
@@ -39,6 +41,7 @@ const ModalView = ({ requirementId, setModal }) => {
                 category: await fetchCategoryById(response.data[0].category_id),
                 status: 'Abierto',
             });
+            fetchName(response.data[0].user_id);
         } catch (error) {
             console.error("Error buscando el requerimiento:", error);
         } finally {
@@ -75,10 +78,18 @@ const ModalView = ({ requirementId, setModal }) => {
         }
     };
 
+    const fetchName = async (id) => {
+        try {
+            const response = await axios.get("http://localhost:3000/user/" + id);
+            setUser(response.data[0].username);
+        } catch (error) {
+            console.error('Error al buscar el nombre del usuario:', error);
+        }
+    }
+
     useEffect(() => {
         fetchDataById(requirementId);
     }, [requirementId]);
-    // console.log(requirement)
 
     if (loading) {
         return (
@@ -99,13 +110,13 @@ const ModalView = ({ requirementId, setModal }) => {
                 <p className="modalItem"><strong>Categoría:</strong> {requirement.category}</p>
                 <p className="modalItem"><strong>Estado:</strong> {requirement.status}</p>
                 <p className="modalItem"><strong>Prioridad:</strong> {requirement.priority}</p>
-                <p className="modalItem"><strong>Usuario Emisor:</strong> PONER USUARIO CON EL CONTEXT</p>
+                <p className="modalItem"><strong>Usuario Emisor:</strong> {user}</p>
                 <p className="modalItem"><strong>Fecha de Creación:</strong> {requirement.created_at}</p>
                 <p className="modalItem"><strong>Asunto:</strong> {requirement.subject}</p>
                 <p className="modalItem"><strong>Descripción:</strong> {requirement.description}</p>
                 <p className="modalItem"><strong>Archivos:</strong></p>
                 <AttachmentBlock id={requirementId} />
-                <p className="modalItem"><strong>Usuario Propietario:</strong> PONER USUARIO CON EL CONTEXT</p>
+                <p className="modalItem"><strong>Usuario Propietario:</strong> {user}</p>
                 <p className="modalItem"><strong>Comentarios:</strong></p>
                 <CommentBlock id={requirementId} />
             </div>

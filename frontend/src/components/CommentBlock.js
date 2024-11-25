@@ -26,7 +26,6 @@ const CommentBlock = ({ id }) => {
         try {
             const response = await axios.get("http://localhost:3000/user/" + id);
             let fullname = response.data[0].name + ' ' + response.data[0].lastname;
-            console.log(fullname);
             return fullname;
         } catch (error) {
             console.error('Error al buscar el nombre del usuario:', error);

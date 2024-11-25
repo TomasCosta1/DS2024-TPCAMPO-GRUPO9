@@ -7,7 +7,7 @@ import ModalView from '../components/ModalView';
 import { UserContext } from '../context/UserContext';
 
 const HomePage = () => {
-    const { verify } = useContext(UserContext);
+    const { verify, userId } = useContext(UserContext);
     useEffect(() => {
         verify();
     }, []);
@@ -49,6 +49,7 @@ const HomePage = () => {
 
     const filteredRequirements = requirements.filter((requirement) => {
         return (
+            requirement.user_id === userId &&
             (requirement.name.toLowerCase().includes(searchTerm.toLowerCase()) || searchTerm === '') &&
             (requirement.category.toLowerCase().includes(searchCategory.toLowerCase()) || searchCategory === '') &&
             (requirement.created_at.includes(searchDate) || searchDate === '') &&
@@ -69,6 +70,7 @@ const HomePage = () => {
         setSelectedRequirementId(id);
         setModal(true);
     };
+
     return (
         <>
             {modal && (
@@ -103,8 +105,8 @@ const HomePage = () => {
                         <option value="" disabled selected>Categoría</option>
                         <option value="Implementar funcionalidad">Implementar funcionalidad</option>
                         <option value="Reparar Programa">Reparar Programa</option>
-                        <option value="Postre">Postre</option>
-                        <option value="Bebida">Bebida</option>
+                        <option value="Solicitud Nueva Hardware">Solicitud Nueva Hardware</option>
+                        <option value="Solicitud Reparar Hardware">Solicitud Reparar Hardware</option>
                     </select>
                     <input
                         type="date"

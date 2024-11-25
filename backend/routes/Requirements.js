@@ -6,6 +6,7 @@ router.get('/', async (req, res) => {
     try {
         const query = `
             SELECT r.id, r.name, r.created_at, r.subject, 
+                r.user_id,
                 p.description AS priority, 
                 c.description AS category, 
                 ct.description AS type, 
@@ -20,7 +21,7 @@ router.get('/', async (req, res) => {
         const [result] = await pool.query(query);
         res.json(result);
     } catch (error) {
-        console.log('Error al obtener los requerimientos:', error);
+        console.error('Error al obtener los requerimientos:', error);
         res.status(500).json({ message: 'Error al obtener los requerimientos', error: error.message });
     }
 });

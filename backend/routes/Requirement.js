@@ -7,19 +7,15 @@ const getSequenceNumber = async (year) => {
     const result = await pool.query(query, [year]);
     
     if (result.length > 0 && result[0].length > 0) {
-        console.log('Número secuencial obtenido:', result[0][0].sequence_number); // Mostrar el número secuencial
-        return result[0][0].sequence_number; // El último número secuencial
+        return result[0][0].sequence_number; 
     } else {
-        console.log('No existe secuencia para este año. Inicializando desde 0');
-        return 0; // Si no existe, inicializar el número secuencial en 0
+        return 0;
     }
 };
 
-// Actualizar el número secuencial en la base de datos
 const updateSequenceNumber = async (year, nextNumber) => {
     const query = 'UPDATE RequirementSequence SET sequence_number = ? WHERE year = ?';
     await pool.query(query, [nextNumber, year]);
-    console.log('Número secuencial actualizado:', nextNumber);
 };
 
 router.get('/', async (req, res) => {

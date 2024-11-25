@@ -30,3 +30,10 @@ header .imgProfile{
     margin-right: 10px;
     object-fit: cover;
 }
+
+header a{
+    color: black;
+    text-decoration: none;
+    margin-right: 20px;
+    font-size: 1.3rem;
+}

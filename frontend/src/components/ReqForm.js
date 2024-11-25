@@ -51,7 +51,6 @@ const ReqForm = () => {
         ? prevSelected.filter((reqId) => reqId !== id)
         : [...prevSelected, id]
     );
-    console.log(selectedRequirements);
     
   };
 
@@ -62,7 +61,6 @@ const ReqForm = () => {
         ? prevSelected.filter((reqName) => reqName !== name)
         : [...prevSelected, name]
     );
-    console.log(selectedRequirementsDesc);
     
   };
 
@@ -106,7 +104,6 @@ const ReqForm = () => {
         }
       );
 
-      console.log("Respuesta del servidor:", response.data);
       navigate("/");
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
