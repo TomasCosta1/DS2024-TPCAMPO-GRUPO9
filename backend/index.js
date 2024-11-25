@@ -9,6 +9,7 @@ const priorityRoutes = require('./routes/Priority');
 const requirementsRoutes = require('./routes/Requirements');
 const commentRoutes = require('./routes/Comment');
 const userRoutes = require('./routes/User');
+const loginRoutes = require('./routes/Login');
 
 const app = express();
 const port = 3000;
@@ -24,6 +25,7 @@ app.use('/priority', priorityRoutes);
 app.use('/requirements', requirementsRoutes);
 app.use('/comment', commentRoutes);
 app.use('/user', userRoutes);
+app.use('/login', loginRoutes);
 
 app.get('/', (req, res) => {
     res.send('Backend funcionando');

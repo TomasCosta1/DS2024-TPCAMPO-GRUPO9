@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../components/Header';
 import '../styles/HomePage.css';
 import ModalView from '../components/ModalView';
+import { UserContext } from '../context/UserContext';
 
 const HomePage = () => {
+    const { verify } = useContext(UserContext);
+    useEffect(() => {
+        verify();
+    }, []);
+
     const [requirements, setRequirements] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchCategory, setSearchCategory] = useState('');
@@ -13,7 +19,7 @@ const HomePage = () => {
     const [sortOrder, setSortOrder] = useState('');
     const [searchType, setSearchType] = useState('');
     const [modal, setModal] = useState(false);
-    const [selectedRequirementId, setSelectedRequirementId] = useState(null); // Cambiado a almacenar solo el ID
+    const [selectedRequirementId, setSelectedRequirementId] = useState(null);
 
     const navigate = useNavigate();
 
@@ -63,7 +69,6 @@ const HomePage = () => {
         setSelectedRequirementId(id);
         setModal(true);
     };
-
     return (
         <>
             {modal && (
