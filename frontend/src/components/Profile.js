@@ -3,12 +3,11 @@ import { UserContext } from "../context/UserContext";
 import "../styles/Profile.css";
 import { useNavigate } from 'react-router-dom';
 
-const Profile = ({email, pass, verify}) => {
+const Profile = ({email, verify}) => {
 
     const navigate = useNavigate();
 
     const [userData, setUserData] = useState({});
-    const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
         verify();
@@ -17,7 +16,7 @@ const Profile = ({email, pass, verify}) => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/login/${email}/${pass}`);
+                const response = await fetch(`http://localhost:3000/profile/${email}`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -30,34 +29,9 @@ const Profile = ({email, pass, verify}) => {
         fetchUserData();
     }, []);
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setUserData({ ...userData, [name]: value });
-    };
-
     const toggleEditMode = () => {
         navigate("/profileEdit")
     };
-
-    const handleSubmit = async () => {
-        /*try {
-            const response = await fetch(`http://localhost:3000/profile/${userId}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(userData),
-            });
-
-            if (response.ok) {
-                alert("Perfil actualizado correctamente");
-                setIsEditing(false);
-            } else {
-                alert("Error al actualizar el perfil");
-            }
-        } catch (error) {
-            console.error("Error al enviar los datos del perfil:", error);
-        }*/
-    };
-
 
     return (
         <div className="profile-container">

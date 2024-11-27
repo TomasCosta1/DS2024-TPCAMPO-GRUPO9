@@ -4,7 +4,7 @@ import "../styles/Login.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Login = ({ handleUser, handleEmail, handlePass }) => {
+const Login = ({ handleEmail }) => {
     const navigate = useNavigate();
 
     const [form, setForm] = useState({
@@ -34,7 +34,6 @@ const Login = ({ handleUser, handleEmail, handlePass }) => {
 
             if (data.success) {
                 handleEmail(loginData.email);
-                handlePass(loginData.pass);
                 navigate("/");
             } else {
                 toast.error('Credenciales inválidas.', { theme: "colored" });

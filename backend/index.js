@@ -10,6 +10,7 @@ const requirementsRoutes = require('./routes/Requirements');
 const commentRoutes = require('./routes/Comment');
 const userRoutes = require('./routes/User');
 const loginRoutes = require('./routes/Login');
+const profileRoutes = require('./routes/Profile');
 
 const app = express();
 const port = 3000;
@@ -26,6 +27,7 @@ app.use('/requirements', requirementsRoutes);
 app.use('/comment', commentRoutes);
 app.use('/user', userRoutes);
 app.use('/login', loginRoutes);
+app.use('/profile', profileRoutes);
 
 app.get('/', (req, res) => {
     res.send('Backend funcionando');

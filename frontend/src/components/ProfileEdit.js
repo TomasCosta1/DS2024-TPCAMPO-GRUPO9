@@ -3,14 +3,14 @@ import { UserContext } from "../context/UserContext";
 import "../styles/Profile.css";
 import { useNavigate } from "react-router-dom";
 
-const Profile = ({email, pass, handleEmail, handlePass}) => {
+const Profile = ({email, handleEmail}) => {
     const [userData, setUserData] = useState({});
     const navigate = useNavigate()
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/login/${email}/${pass}`);
+                const response = await fetch(`http://localhost:3000/profile/${email}`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -40,9 +40,8 @@ const Profile = ({email, pass, handleEmail, handlePass}) => {
             
 
             if (data.success) {
-                handleEmail(userData.email)
-                handlePass(userData.password)
-                navigate("/profile")
+                handleEmail(userData.email);
+                navigate("/profile");
             }
 
             

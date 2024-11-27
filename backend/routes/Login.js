@@ -2,11 +2,6 @@ const express = require('express');
 const pool = require('../config/database');
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-    const query = "SELECT * FROM User";
-    const result = await pool.query(query);
-    res.status(200).json({success: true, message: result})
-})
 
 router.get("/:email/:pass", async (req, res) => {
     const email = req.params.email;
@@ -25,10 +20,14 @@ router.get("/:email/:pass", async (req, res) => {
             
 
             if (userPassword.trim() === password.trim()) {
+                const userData = {
+                    id: user[0].id,
+                    email: user[0].email
+                }
                 // Si coinciden, login exitoso
 
 
-                return res.status(200).json({ success: true, message: "Inicio de sesión exitoso", user:user[0] });
+                return res.status(200).json({ success: true, message: "Inicio de sesión exitoso", id:userData.id, email:userData.email });
             } else {
                 // Si no coinciden, devuelve error
                 return res.status(401).json({ success: false, message: "Credenciales inválidas" });
@@ -39,6 +38,22 @@ router.get("/:email/:pass", async (req, res) => {
         }
     
 });
+
+router.get("/:email", async (req, res) => {
+    const email = req.params.email;
+    const query = "SELECT * FROM User WHERE email = ?";
+    try {
+        const response = await pool.query(query, [email]);
+        const userData = {
+            id: response[0][0].id,
+            email: response[0][0].email
+        }
+        res.status(200).json({success: true, id: userData.id, email: userData.email});
+    } catch (error) {
+        console.log('Error:', error);
+        res.status(400).json({message: 'Error', error: error.message});
+    }
+})
 
 router.put("/", async (req, res) => {
     const userData = req.body;

@@ -6,16 +6,11 @@ export const UserContext=createContext()
 export const UserProvider=({children}) => {
     const [user, setUser] = useState("");
     const [userId, setUserId] = useState("");
-    const [pass, setPass] = useState("");
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
 
     const handleUser = (prop) => {
         setUser(prop);
-    }
-
-    const handlePass = (prop) => {
-        setPass(prop);
     }
 
     const handleEmail = (prop) => {
@@ -28,20 +23,23 @@ export const UserProvider=({children}) => {
 
     const verify = async () => {
             const loginData = {
-                email: email,
-                pass: pass
+                email: email
             };
-        
+            
+            
+            
+        if (loginData.email != "") {
             try {
-                const response = await fetch(`http://localhost:3000/login/${loginData.email}/${loginData.pass}`, {
+                
+                const response = await fetch(`http://localhost:3000/login/${loginData.email}`, {
                     method: 'GET'
                 });
                 
                 const data = await response.json();
                 
-        
+                
                 if (data.success) {
-                    handleUserId(data.user.id)
+                    handleUserId(data.id)
                 } else {
                     navigate("/login")
                 }
@@ -49,11 +47,14 @@ export const UserProvider=({children}) => {
                 console.error("Error:", error);
                 navigate("/login")
             }
+        }else{
+            navigate("/login")
+        }
+            
     }
 
     const clearUser = () => {
         setEmail('');
-        setPass('');
         setUserId('');
         navigate('/login');
     }
@@ -62,11 +63,9 @@ export const UserProvider=({children}) => {
         <UserContext.Provider
           value={{
             user,
-            pass,
             userId,
             email,
             handleUser,
-            handlePass,
             handleEmail,
             handleUserId,
             verify,
