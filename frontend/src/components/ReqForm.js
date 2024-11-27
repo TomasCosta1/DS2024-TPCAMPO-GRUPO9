@@ -27,6 +27,8 @@ const ReqForm = () => {
   const [modalCancel, setModalCancel] = useState(false);
   const [modalCreate, setModalCreate] = useState(false);
   const [validate, setValidate] = useState(false);
+  const [page, setPage] = useState(1);
+  const [maxPage, setMaxPage] = useState(1);
 
   const formRef = React.useRef(null);
   const navigate = useNavigate();
@@ -34,16 +36,27 @@ const ReqForm = () => {
 
   const fetchRequirements = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/requirements/${userId}`);
-      setRequirements(response.data);
-    } catch (error) {
-      console.error("Error fetching requirements:", error);
-    }
+      const response = await axios.get('http://localhost:3000/requirements', {
+          params: {
+              user_id: userId,
+              page: page,
+              limit: 10,
+          },
+      });
+
+      setRequirements(response.data.data);
+      setMaxPage(Math.ceil(response.data.total / 10));
+      console.log('Total resultados:', response.data.total);
+  } catch (error) {
+      console.error('Error buscando los requerimientos:', error);
+  }
   };
 
   useEffect(() => {
-    fetchRequirements();
-  }, []);
+    if(userId) {
+        fetchRequirements();
+    }
+  }, [userId, page]);
 
   const handleCheckboxChange = (id) => {
     setSelectedRequirements((prevSelected) =>
@@ -103,7 +116,7 @@ const ReqForm = () => {
           },
         }
       );
-
+      
       navigate("/");
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
@@ -232,6 +245,9 @@ const ReqForm = () => {
           validateData={validateData}
           validate={validate}
           formRef={formRef}
+          page={page}
+          setPage={setPage}
+          maxPage={maxPage}
         />
       </div>
       

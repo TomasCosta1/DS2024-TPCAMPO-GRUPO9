@@ -30,6 +30,7 @@
     gap: 20px;
     width: 100%;
     max-width: 600px;
+    
 }
 
 .profile-field {
@@ -100,79 +101,13 @@
 }
 
 
-/* 
-.profile-container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .profile-image-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-  
-  .profile-image {
-    width: 100px;
-    height: 100px;
-    background-color: #ccc;
-    border-radius: 50%;
-  }
-  
-  .profile-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group {
-    margin-bottom: 10px;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
+@media (max-width: 768px) {
+  .profile-fields {
+    grid-template-columns: repeat(1, 1fr);
+    
+}
 
-  .input-editable {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    background-color: white;
-  }
-  
-  .input-disabled {
-    width: 100%;
-    padding: 8px;
-    border: none;
-    background-color: #f0f0f0;
-  }
-  
-  .button-group {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .button {
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 4px;
-    color: white;
-  }
-  
-  .cancel-button {
-    background-color: red;
-  }
-  
-  .confirm-button {
-    background-color: green;
-  }
-  
-  .edit-button {
-    background-color: blue;
-  }*/
-  
+.profile-actions{
+  gap: 20px;
+}
+}

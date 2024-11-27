@@ -8,6 +8,7 @@
     display: flex;
     gap: 15px;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .homePage form input{
@@ -47,13 +48,20 @@
     cursor: pointer;
 }
 
-.homePage .table-container{
-    display: flex;
-    justify-content: center;
-    align-items: start;
-    padding-left: 30px;
+.table-container {
+    width: 73%;
     height: 500px;
-    margin-bottom: 30px;
+    overflow-y: scroll; 
+    border: 2px solid #000000;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
 }
 
 .homePage table{
@@ -86,3 +94,55 @@
 .attachmentBlock i{
     font-size: 1.5rem;
 }
+
+.paginationDiv {
+    display: flex;
+    width: 73%;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.buttonPag {
+    font-size: 18px;
+    background-color: white;
+    border: none;
+}
+.buttonPag:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.nombreArchivo {
+    font-size: 13px;
+}
+
+@media (max-width: 768px) {
+    .table-container {
+        width: 85%;
+        height: 250px;
+    }
+
+    th, td {
+      padding: 8px;
+      font-size: 11px;
+    }
+  
+    th {
+      white-space: nowrap; 
+    }
+
+    .filter{
+        width: 90%;
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .filter input{
+        width: 83.5%;
+    }
+
+    .filter select, .filter button, .homePage .filter .confirmBtn{
+        width: 90%;
+    }
+  }

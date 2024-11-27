@@ -22,7 +22,7 @@ const AttachmentBlock = ({ id }) => {
                 attachments.map((attachment, index) => (
                     <div key={index} className='attachmentBlock'>
                         <div><i class="fa-regular fa-file"></i><i class="fa-solid fa-download"></i></div>
-                        <p>{attachment.name}</p>
+                        <p className='nombreArchivo'>{attachment.name}</p>
                     </div>
                 ))
             ) : (

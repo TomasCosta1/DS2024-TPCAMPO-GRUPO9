@@ -48,6 +48,9 @@ router.post('/', async (req, res) => {
     const currentYear = new Date().getFullYear(); // Obtener el año actual
     
     try {
+        const queryType = 'SELECT requirementType_code FROM Category WHERE id = ?';
+        const responseType = await pool.query(queryType, [category_id]);
+        const type = responseType[0][0].requirementType_code;
         // Obtener el número secuencial actual
         let sequenceNumber = await getSequenceNumber(currentYear);
         
@@ -58,7 +61,7 @@ router.post('/', async (req, res) => {
         await updateSequenceNumber(currentYear, nextNumber);
         
         // Generar el nombre del requerimiento
-        const requirementName = `REH-${currentYear}-${String(nextNumber).padStart(10, '0')}`;
+        const requirementName = `${type}-${currentYear}-${String(nextNumber).padStart(10, '0')}`;
         
         // Insertar el requerimiento en la tabla Requirement
         const query = 'INSERT INTO Requirement (name, subject, description, status_id, priority_id, category_id, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)';

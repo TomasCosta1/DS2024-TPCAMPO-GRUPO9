@@ -75,7 +75,7 @@
 
 .table-container {
     width: 73%;
-    height: 250px;
+    height: 500px;
     overflow-y: scroll; 
     border: 2px solid #000000;
     margin-top: 20px;
@@ -104,6 +104,21 @@ th, td {
     cursor: pointer;
 }
 
+.blueButton {
+    background-color: #4573FF;
+    color: white;
+    border: none;
+    width: 10rem;
+    height: 2.2rem;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.blueButton:hover {
+    cursor: pointer;
+    background-color: #0033FF;
+  }
+
 .createButton {
     background-color: #68C34A;
     color: white;
@@ -125,6 +140,41 @@ th, td {
     text-align: center;
 }
 
+.paginationDiv {
+    display: flex;
+    width: 60%;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.buttonPag {
+    font-size: 18px;
+    background-color: white;
+    border: none;
+}
+.buttonPag:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.tableDivContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.tableDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.redDot {
+    color: red;
+}
+
 @media (max-width: 768px) {
     .row {
         display: flex;
@@ -139,6 +189,7 @@ th, td {
 
     .table-container {
         width: 85%;
+        height: 250px;
     }
 
     th, td {
@@ -149,4 +200,26 @@ th, td {
     th {
       white-space: nowrap; 
     }
+
+    .tableDiv {
+        width: 100%;
+      }
+    
+      .paginationDiv {
+        width: 100%;
+      }
+    
+      .createButton {
+        width: 8rem;
+      }
+    
+      .blueButton {
+        width: 8rem;
+      }
+    
+      .cancelButton {
+        width: 8rem;
+      }
   }
+
+  

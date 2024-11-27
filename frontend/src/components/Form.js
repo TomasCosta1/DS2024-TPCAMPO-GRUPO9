@@ -26,14 +26,17 @@ const Form = ({
   validateData,
   handleCheckboxNames,
   validate,
-  formRef
+  formRef,
+  page,
+  setPage,
+  maxPage,
 }) => {
   return (
     <form className="form" ref={formRef} onSubmit={submitReq}>
       <div className="row">
         <section className="inputSection">
           <label htmlFor="type" className="labels">
-            Tipo Requerimiento
+            Tipo Requerimiento <span className="redDot">*</span>
           </label>
           <select
             id="type"
@@ -56,7 +59,7 @@ const Form = ({
         </section>
         <section className="inputSection">
           <label htmlFor="category" className="labels">
-            Categoria
+            Categoria <span className="redDot">*</span>
           </label>
           <select
             id="category"
@@ -83,7 +86,7 @@ const Form = ({
       <div className="row">
         <section className="inputSection">
           <label htmlFor="priority" className="labels">
-            Prioridad
+            Prioridad <span className="redDot">*</span>
           </label>
           <select
             id="priority"
@@ -107,7 +110,7 @@ const Form = ({
         </section>
         <section className="inputSection">
           <label htmlFor="subject" className="labels">
-            Asunto
+            Asunto <span className="redDot">*</span>
           </label>
           <input
             type="text"
@@ -123,7 +126,7 @@ const Form = ({
       <div className="row">
         <section className="inputSection">
           <label htmlFor="description" className="labels">
-            Descripción
+            Descripción <span className="redDot">*</span>
           </label>
           <textarea
             id="description"
@@ -175,7 +178,8 @@ const Form = ({
         </section>
       </div>
       {validate && <p className="alert">Por favor complete todos los campos</p>}
-      <div className="rowBtn">
+      <div className="tableDivContainer">
+        <div className="tableDiv">
         <RelatedReq
           requirements={requirements}
           formatDate={formatDate}
@@ -183,6 +187,32 @@ const Form = ({
           handleCheckboxChange={handleCheckboxChange}
           handleCheckboxNames={handleCheckboxNames}
         />
+        </div>
+        <div className='paginationDiv'>
+                    <button
+                    className='buttonPag'
+                    type='button'
+                        onClick={(e) => {
+                            e.preventDefault();
+                            if (page === 1) return;
+                                setPage(page - 1);
+                        }}
+                    >
+                        Página anterior
+                    </button>
+                    <p>Página: {page}</p>
+                    <button
+                    className='buttonPag'
+                    type='button'
+                        onClick={(e) => {
+                            e.preventDefault();
+                            if (page === maxPage) return;
+                                setPage(page + 1);
+                        }}
+                    >
+                        Siguiente página
+                    </button>
+                </div>
       </div>
 
       <div className="rowBtn">

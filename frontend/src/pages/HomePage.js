@@ -15,12 +15,13 @@ const HomePage = () => {
     const [requirements, setRequirements] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchCategory, setSearchCategory] = useState('');
-    const [searchDate, setSearchDate] = useState('');
     const [sortOrder, setSortOrder] = useState('');
     const [searchType, setSearchType] = useState('');
     const [modal, setModal] = useState(false);
     const [selectedRequirementId, setSelectedRequirementId] = useState(null);
     const [fullName, setFullName] = useState("");
+    const [page, setPage] = useState(1);
+    const [maxPage, setMaxPage] = useState(1);
 
     const navigate = useNavigate();
 
@@ -36,15 +37,30 @@ const HomePage = () => {
     fetchFullName();
 
     useEffect(() => {
-        fetchRequirements();
-    }, []);
+        if(userId) {
+            fetchRequirements();
+        }
+    }, [userId, searchTerm, searchCategory, sortOrder, searchType, page]);
 
     const fetchRequirements = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/requirements`);
-            setRequirements(response.data);
+            const response = await axios.get('http://localhost:3000/requirements', {
+                params: {
+                    user_id: userId,
+                    name: searchTerm,
+                    category: searchCategory,
+                    priority: sortOrder,
+                    type: searchType,
+                    page: page,
+                    limit: 10,
+                },
+            });
+    
+            setRequirements(response.data.data);
+            setMaxPage(Math.ceil(response.data.total / 10));
+            console.log('Total resultados:', response.data.total);
         } catch (error) {
-            console.error("Error buscando los requerimientos:", error);
+            console.error('Error buscando los requerimientos:', error);
         }
     };
 
@@ -53,29 +69,29 @@ const HomePage = () => {
         return date.toISOString().split("T")[0];
     };
 
-    const handleSearchChange = (e) => setSearchTerm(e.target.value);
-    const handleCategoryChange = (e) => setSearchCategory(e.target.value);
-    const handleDateChange = (e) => setSearchDate(e.target.value);
-    const handleSortOrderChange = (e) => setSortOrder(e.target.value);
-    const handleTypeChange = (e) => setSearchType(e.target.value);
-
-    const filteredRequirements = requirements.filter((requirement) => {
-        return (
-            requirement.user_id === userId &&
-            (requirement.name.toLowerCase().includes(searchTerm.toLowerCase()) || searchTerm === '') &&
-            (requirement.category.toLowerCase().includes(searchCategory.toLowerCase()) || searchCategory === '') &&
-            (requirement.created_at.includes(searchDate) || searchDate === '') &&
-            (requirement.priority.toLowerCase().includes(sortOrder.toLowerCase()) || sortOrder === '') &&
-            (requirement.type.toLowerCase().includes(searchType.toLowerCase()) || searchType === '')
-        );
-    });
+    const handleSearchChange = (e) => {
+        setPage(1);
+        setSearchTerm(e.target.value)
+    };
+    const handleCategoryChange = (e) => {
+        setPage(1);
+        setSearchCategory(e.target.value)
+    };
+    const handleSortOrderChange = (e) => {
+        setPage(1);
+        setSortOrder(e.target.value)
+    };
+    const handleTypeChange = (e) => {
+        setPage(1);
+        setSearchType(e.target.value)
+    };
 
     const clearFilters = () => {
         setSearchTerm('');
         setSearchCategory('');
-        setSearchDate('');
         setSortOrder('');
         setSearchType('');
+        setPage(1);
     };
 
     const openModal = (id) => () => {
@@ -121,11 +137,6 @@ const HomePage = () => {
                         <option value="Solicitud Nueva Hardware">Solicitud Nueva Hardware</option>
                         <option value="Solicitud Reparar Hardware">Solicitud Reparar Hardware</option>
                     </select>
-                    <input
-                        type="date"
-                        value={searchDate}
-                        onChange={handleDateChange}
-                    />
                     <button className='btnDefault' type="button" onClick={() => { clearFilters() }}>Limpiar filtros</button>
                     <button className='confirmBtn' type="button" onClick={() => { navigate('/newReq') }}>Nuevo Req.</button>
                 </form>
@@ -143,7 +154,7 @@ const HomePage = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredRequirements.map((req, index) => {
+                            {requirements.map((req, index) => {
                                 const formattedDate = formatDate(req.created_at);
                                 return (
                                     <tr key={req.id} onClick={openModal(req.id)}>
@@ -159,6 +170,31 @@ const HomePage = () => {
                             })}
                         </tbody>
                     </table>
+                </div>
+                <div className='paginationDiv'>
+                    <button
+                    className='buttonPag'
+                    type='button'
+                        onClick={(e) => {
+                            e.preventDefault();
+                            if (page === 1) return;
+                                setPage(page - 1);
+                        }}
+                    >
+                        Página anterior
+                    </button>
+                    <p>Página: {page}</p>
+                    <button
+                    className='buttonPag'
+                    type='button'
+                        onClick={(e) => {
+                            e.preventDefault();
+                            if (page === maxPage) return;
+                                setPage(page + 1);
+                        }}
+                    >
+                        Siguiente página
+                    </button>
                 </div>
             </div>
         </>
