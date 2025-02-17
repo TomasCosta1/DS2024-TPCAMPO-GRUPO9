@@ -63,11 +63,11 @@ const ModalCreate = ({
         </p>
         <p className="modalItem"><strong>Usuario Propietario:</strong> {fullName}</p>
         <div className="modalCreate-buttons">
-          <button className="cancelBtn" onClick={() => setModalCreate(false)}>
+          <button className="btnSecondary" onClick={() => setModalCreate(false)}>
             Cancelar
           </button>
           <button
-            className="confirmBtn"
+            className="btnDefault"
             onClick={() => {
               handleFormSubmit();
             }}

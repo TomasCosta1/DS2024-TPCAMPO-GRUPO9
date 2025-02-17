@@ -137,8 +137,8 @@ const HomePage = () => {
                         <option value="Solicitud Nueva Hardware">Solicitud Nueva Hardware</option>
                         <option value="Solicitud Reparar Hardware">Solicitud Reparar Hardware</option>
                     </select>
-                    <button className='btnDefault' type="button" onClick={() => { clearFilters() }}>Limpiar filtros</button>
-                    <button className='confirmBtn' type="button" onClick={() => { navigate('/newReq') }}>Nuevo Req.</button>
+                    <button className='btnSecondary' type="button" onClick={() => { clearFilters() }}>Limpiar filtros</button>
+                    <button className='btnDefault' type="button" onClick={() => { navigate('/newReq') }}>Nuevo Req.</button>
                 </form>
                 <div className="table-container">
                     <table>

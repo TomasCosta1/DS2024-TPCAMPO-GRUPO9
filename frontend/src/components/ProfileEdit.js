@@ -136,12 +136,12 @@ const Profile = ({email, handleEmail}) => {
             </div>
             <div className="profile-actions">
                         <button
-                            className="cancel-button"
+                            className="btnSecondary"
                             onClick={() => navigate("/profile")}
                         >
                             Cancelar
                         </button>
-                        <button className="confirm-button" onClick={handleSubmit}>
+                        <button className="btnDefault" onClick={handleSubmit}>
                             Confirmar
                         </button>
             </div>

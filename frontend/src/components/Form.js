@@ -134,6 +134,7 @@ const Form = ({
             className="inputs"
             onChange={(e) => setDescription(e.target.value)}
             required
+            style={{ resize: "none" }}
           />
         </section>
         <section className="inputSection">
@@ -164,7 +165,7 @@ const Form = ({
           <section className="inputFileBtn">
             <button
               type="button"
-              className="file-button"
+              className="btnDefault"
               onClick={() => document.getElementById("files").click()}
             >
               Seleccionar archivos
@@ -219,7 +220,7 @@ const Form = ({
         <section className="inputSection">
           <button
             type="button"
-            className="cancelButton"
+            className="btnSecondary"
             onClick={(e) => {
               e.preventDefault();
               setModalCancel(true);
@@ -231,7 +232,7 @@ const Form = ({
         <section className="inputSection">
           <button
             type="button"
-            className="createButton"
+            className="btnDefault"
             onClick={(e) => {
               e.preventDefault();
               validateData();

@@ -23,18 +23,34 @@
     border: 1px solid #8C81FF;
 }
 
-.homePage form .btnDefault{
+.btnDefault{
     padding: 10px;
     border-radius: 5px;
-    border: none;
+    border: 2px solid #8C81FF;
     background-color: #8C81FF;
     color: white;
     cursor: pointer;
     font-size: 1rem;
 }
 
-.homePage form .btnDefault:hover{
+.btnDefault:hover{
     background-color: #6A5ACD;
+    border: 2px solid #6A5ACD;
+}
+
+.btnSecondary{
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #8C81FF;
+    background-color: white;
+    color: #8C81FF;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btnSecondary:hover{
+    background-color: #8C81FF;
+    color: white;
 }
 
 .homePage form .confirmBtn{

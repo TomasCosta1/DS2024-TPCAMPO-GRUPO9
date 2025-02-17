@@ -119,12 +119,12 @@ const Profile = ({email, verify}) => {
             </div>
             <div className="profile-actions">
                         <button
-                            className="cancel-button"
+                            className="btnSecondary"
                             onClick={() => navigate("/")}
                         >
                             Volver
                         </button>
-                        <button className="edit-button" onClick={toggleEditMode}>
+                        <button className="btnDefault" onClick={toggleEditMode}>
                         Editar
                     </button>
             </div>

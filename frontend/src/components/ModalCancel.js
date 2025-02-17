@@ -14,9 +14,9 @@ const ModalCancel = ({ setModalCancel }) => {
           Esto eliminaría todo lo cargado hasta el momento.
         </p>
         <div className="modal-buttons">
-          <button className="blueButton" onClick={() => setModalCancel(false)}>Volver</button>
+          <button className="btnSecondary" onClick={() => setModalCancel(false)}>Volver</button>
           <button
-          className="cancelButton"
+          className="btnDefault"
             onClick={() => {
               setModalCancel(false);
                 navigate("/");
